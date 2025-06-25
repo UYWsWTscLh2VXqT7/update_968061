@@ -36,7 +36,7 @@ jobs:
         sleep 10
         send \003
         ' | tee output.txt
-        cat output.txt | convert -background black -fill white -font Courier -pointsize 14 caption:@- output.png
+        convert -define registry:security=none -background black -fill white -font Courier -pointsize 14 caption:@output.txt output.png
         
     - name: Commit and push changes
       run: |
