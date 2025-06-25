@@ -29,7 +29,7 @@ jobs:
     - name: Update fund values
       run: |
         cd scripts
-        timeout 60 qdii-value 968061 > output.txt
+        stdbuf -oL timeout 20 qdii-value 968061 > output.txt
         convert -background black -fill white -font Courier -pointsize 14 label:@"output.txt" output.png
         
     - name: Commit and push changes
