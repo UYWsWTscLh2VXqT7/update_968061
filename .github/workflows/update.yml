@@ -36,7 +36,7 @@ jobs:
         sleep 10
         send \003
         ' | tee output.txt
-        convert -background black -fill white -font Courier -pointsize 14 label:@"output.txt" output.png
+        cat output.txt | convert -background black -fill white -font Courier -pointsize 14 caption:@- output.png
         
     - name: Commit and push changes
       run: |
