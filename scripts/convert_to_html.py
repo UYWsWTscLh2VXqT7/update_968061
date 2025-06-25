@@ -60,6 +60,10 @@ html = f"""<!DOCTYPE html>
   <div class="bg-dark rounded p-3">
     {html_body}
   </div>
+  <p class="footer mt-3">
+            仅计算公开的前 10 仓位，数据仅供参考<br>数据每两小时自动更新一次，若出现异常，请两小时后再来查看<br>
+            Powered by <a href="https://github.com/xiaopc/qdii-value ">GitHub: xiaopc/qdii-value</a>
+  </p>
 </div>
 </body>
 </html>
