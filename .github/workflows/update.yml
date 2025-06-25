@@ -21,7 +21,7 @@ jobs:
       run: |
         pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
         sudo apt-get install expect
-        pip install Pillow
+        pip install pygments pygments-ansi-color
      
     - name: Update fund values
       working-directory: scripts
@@ -29,15 +29,15 @@ jobs:
         expect -c '
         log_user 1
         spawn qdii-value 968061
-        sleep 10
+        sleep 5
         send \003
         expect eof
         ' | tee output.txt
-        python txt2png.py
+        python convert_to_html.py
         
     - name: Commit and push changes
       run: |
-        cp scripts/output.png data/output.png
+        cp scripts/output.html  data/output.html 
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@users.noreply.github.com'
         git add data/output.png
