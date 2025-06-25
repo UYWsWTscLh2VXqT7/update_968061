@@ -20,8 +20,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
-        pip install pygments  # 用于ANSI颜色转HTML
-        pip install pygments-ansi-color
         sudo apt-get install expect
     
     - name: Install ImageMagick
