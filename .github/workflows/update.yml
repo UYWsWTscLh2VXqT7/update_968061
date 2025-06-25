@@ -23,7 +23,10 @@ jobs:
         sudo apt-get install expect
     
     - name: Install ImageMagick
-      run: sudo apt-get install imagemagick -y
+      run: |
+        sudo add-apt-repository -y ppa:ubuntuhandbook1/imagick
+        sudo apt-get update
+        sudo apt-get install -y imagemagick
      
     - name: Update fund values
       working-directory: scripts
@@ -34,7 +37,7 @@ jobs:
         sleep 10
         send \003
         ' | tee output.txt
-        convert -define registry:security=none -background black -fill white -font Courier -pointsize 14 caption:@output.txt output.png
+        cat output.txt | magick -background black -fill white -font Courier -pointsize 14 caption:@- output.png
         
     - name: Commit and push changes
       run: |
