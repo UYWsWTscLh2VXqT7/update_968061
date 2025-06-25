@@ -29,7 +29,7 @@ jobs:
         expect -c '
         log_user 1
         spawn qdii-value 968061
-        sleep 1
+        sleep 5
         send \003
         sleep 0.01
         send \003
