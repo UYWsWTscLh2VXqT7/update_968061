@@ -69,7 +69,7 @@ html = f"""<!DOCTYPE html>
 </html>
 """
 
-with open("output.html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-print("✅ Saved responsive bootstrap output.html")
+print("✅ Saved responsive bootstrap index.html")
