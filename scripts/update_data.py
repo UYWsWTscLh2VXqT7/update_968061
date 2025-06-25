@@ -43,7 +43,7 @@ for code in fund_codes:
             fund_outputs[code] = result.stdout
             
             # 转换为带样式的HTML
-            lexer = get_lexer_by_name("ansi-color", stripall=True)
+            lexer = get_lexer_by_name("ansi-terminal", stripall=True)
             formatter = HtmlFormatter(
                 style="monokai",
                 noclasses=True,
