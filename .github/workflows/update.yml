@@ -22,6 +22,7 @@ jobs:
         pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
         pip install pygments  # 用于ANSI颜色转HTML
         pip install pygments-ansi-color
+        sudo apt-get install expect
     
     - name: Install ImageMagick
       run: sudo apt-get install imagemagick -y
@@ -29,9 +30,13 @@ jobs:
     - name: Update fund values
       working-directory: scripts
       run: |
-        ls -l
-        cat 968061.json
-        timeout 20 qdii-value 968061 > output.txt
+        timeout 20 expect -c "
+        spawn qdii-value 968061 > output.txt
+        expect \"\n\" {
+        send_user \"ok\n\"
+        exit
+        }
+        "
         convert -background black -fill white -font Courier -pointsize 14 label:@"output.txt" output.png
         
     - name: Commit and push changes
