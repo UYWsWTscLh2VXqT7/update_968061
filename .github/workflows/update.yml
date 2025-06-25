@@ -37,7 +37,6 @@ jobs:
         
     - name: Commit and push changes
       run: |
-        mkdir data
         cp scripts/output.png data/output.png
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@users.noreply.github.com'
