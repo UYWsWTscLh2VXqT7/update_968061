@@ -30,13 +30,12 @@ jobs:
     - name: Update fund values
       working-directory: scripts
       run: |
-        timeout 20 expect -c "
-        spawn qdii-value 968061 > output.txt
-        expect \"\n\" {
-        send_user \"ok\n\"
-        exit
-        }
-        "
+        expect -c '
+        log_user 1
+        spawn qdii-value 968061
+        sleep 10
+        send \003
+        ' | tee output.txt
         convert -background black -fill white -font Courier -pointsize 14 label:@"output.txt" output.png
         
     - name: Commit and push changes
