@@ -21,6 +21,7 @@ jobs:
       run: |
         pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
         pip install pygments  # 用于ANSI颜色转HTML
+        pip install pygments-ansi-color
         
     - name: Update fund values
       run: |
