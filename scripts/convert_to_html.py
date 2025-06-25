@@ -25,6 +25,7 @@ for line in lines:
     # 过滤纯控制字符行
     if re.fullmatch(r'\x1b\[[0-9;?]*[a-zA-Z]', line.strip()):
         continue
+    line = line.rstrip()
     cleaned_lines.append(line)
 
 cleaned_content = "\n".join(cleaned_lines)
