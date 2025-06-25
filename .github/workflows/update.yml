@@ -31,6 +31,8 @@ jobs:
         spawn qdii-value 968061
         sleep 1
         send \003
+        sleep 0.1
+        send \003
         expect eof
         ' | tee output.txt
         python convert_to_html.py
