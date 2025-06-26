@@ -31,7 +31,7 @@ html = f"""<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>摩根太平洋科技基金（968061）估值</title>
+  <title class="text-center">摩根太平洋科技基金（968061）估值</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {{ padding: 2rem; 
@@ -71,7 +71,6 @@ html = f"""<!DOCTYPE html>
 <body>
   <div class="container">
     <h4 class="mb-3">摩根太平洋科技（968061）估值</h4>
-    <p class="text-muted">估值更新于 {update_time}<br>持仓截至 2025-05-31</p>
     <div class="table-wrapper shadow rounded p-3">
     <table class="table custom-table">
       <thead class="table-light">
@@ -124,8 +123,9 @@ html += """
       </tbody>
     </table>
     </div>
-    <div class="footer text-muted mt-5 text-center" style="font-size: 0.85rem;">
-      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
+    <div class="footer text-muted mt-5 text-center" style="font-size: 0.7rem;">
+      <p>估值更新于 {update_time}<br>持仓截至 2025-05-31（摩根仅公开前 10 仓位）</p>
+      <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
   </div>
 </body>
