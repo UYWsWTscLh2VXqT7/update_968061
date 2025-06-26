@@ -2,7 +2,7 @@ name: Update Fund Values
 
 on:
   schedule:
-   - cron: '30 */2 * * *'  # 每2小时运行一次
+   - cron: '30 9-23 * * *'  # 每 1 小时运行一次
   workflow_dispatch:
 
 jobs:
@@ -20,22 +20,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
-        sudo apt-get install expect
-        pip install pygments pygments-ansi-color
      
     - name: Update fund values
       working-directory: scripts
       run: |
-        expect -c '
-        log_user 1
-        spawn qdii-value 968061
-        sleep 5
-        send \003
-        sleep 0.01
-        send \003
-        expect eof
-        ' | tee output.txt
-        python convert_to_html.py
+        python render_html.py
         
     - name: Commit and push changes
       run: |
