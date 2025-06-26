@@ -69,7 +69,7 @@ for eq in equities:
     weight = f"{Decimal(eq['weight']):.2f}%"
     price = f"{Decimal(eq['last']):.2f}"
     change = float(eq['change'])
-    change_str = f"{change:2f}"
+    change_str = f"{change:.2f}"
     percent = float(eq['change_percent'])
     percent_str = f"{percent:.2f}%"
     
