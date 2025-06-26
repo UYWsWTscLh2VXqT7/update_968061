@@ -71,7 +71,7 @@ html = f"""<!DOCTYPE html>
       今日开市仓位：{today_weight}；今日涨跌幅：{colorize(today_percent)}
     </div>
     
-    <table class="table table-bordered custom-table">
+    <table class="table table-bordered custom-table shadow">
       <thead class="table-light">
         <tr>
           <th>代码</th>
