@@ -11,10 +11,9 @@ with open("968061.json", encoding="utf-8") as f:
 cfg = Config(conf)
 _, summary = processing.fetch(cfg.data['equities'])
 
-today = datetime.now()
-record_date = (today - timedelta(days=1)).strftime("%Y-%m-%d")
+today = datetime.now().strftime("%Y-%m-%d")
 new_record = {
-    "date": record_date,
+    "date": today,
     "total_percent": float(round(summary["total_percent"], 2))
 }
 
