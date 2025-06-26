@@ -40,37 +40,38 @@ html = f"""<!DOCTYPE html>
                  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }}
     table {{ font-size: 0.9rem; }}
-      /* 移除隔行灰色背景 */
+      .shadow {{
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+      }}
       .table-striped tbody tr:nth-of-type(odd) {{
         background-color: transparent;
       }}
-    
-      /* 自定义只保留列边框的效果 */
+      .custom-table {{
+        border: none !important;  
+      }}
       .custom-table td, .custom-table th {{
         border-left: 1px solid #dee2e6;
         border-right: 1px solid #dee2e6;
       }}
-    
-      /* 移除每行的顶部和底部边框 */
-      .custom-table tbody tr td {{
-        border-top: none;
-        border-bottom: none;
-      }}
-    
-      /* 保留表头完整边框 */
       .custom-table thead th {{
         border-top: 1px solid #dee2e6;
         border-bottom: 1px solid #dee2e6;
       }}
+      .table-wrapper {{
+        background: white;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        border-radius: 8px;
+      }}
   </style>
+  
 </head>
 <body>
   <div class="container">
     <h2 class="mb-3">摩根太平洋科技（968061）估值</h2>
     <p class="text-muted">估值更新于 {update_time}；持仓截至 2025-05-31</p>
     
-    <div class="table-responsive mb-5">
-    <table class="table table-bordered custom-table shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="table-wrapper shadow rounded p-3">
+    <table class="table custom-table">
       <thead class="table-light">
         <tr>
           <th>名称</th>
@@ -122,7 +123,7 @@ html += """
     </table>
     </div>
     <div class="footer text-muted mt-5 text-center" style="font-size: 0.85rem;">
-      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
+      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
   </div>
 </body>
