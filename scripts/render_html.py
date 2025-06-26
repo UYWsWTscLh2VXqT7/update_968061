@@ -68,9 +68,11 @@ for eq in equities:
     name = eq['name']
     weight = f"{Decimal(eq['weight']):.2f}%"
     price = f"{Decimal(eq['last']):.2f}"
-    change = f"{Decimal(eq['change']):.2f}"
+    change = float(eq['change'])
+    change_str = f"{change:2f}"
     percent = float(eq['change_percent'])
     percent_str = f"{percent:.2f}%"
+    
 
     # 颜色设定
     if percent > 0:
@@ -93,7 +95,7 @@ for eq in equities:
           <td>{name}</td>
           <td>{weight}</td>
           <td>{price}</td>
-          <td>{change}</td>
+          <td class="{color}">{change_str}</td>
           <td class="{color}">{percent_str}</td>
         </tr>
     """
