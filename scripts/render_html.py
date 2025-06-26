@@ -70,7 +70,7 @@ html = f"""<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <h5 class="mb-3 text-center">摩根太平洋科技（968061）估值</h5>
+    <p class="mb-2 text-center">摩根太平洋科技（968061）估值</p>
     <p class="text-muted text-center" style="font-size: 0.6rem;">估值更新 {update_time}，持仓截至 2025-05-31</p>
     <div class="table-wrapper shadow rounded p-3">
     <table class="table custom-table">
