@@ -39,12 +39,9 @@ html = f"""<!DOCTYPE html>
                  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
                  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }}
-    table {{ font-size: 0.9rem; }}
+    table {{ font-size: 0.8rem; }}
       .shadow {{
        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-      }}
-      .table-striped tbody tr:nth-of-type(odd) {{
-        background-color: transparent;
       }}
       .custom-table {{
         border: none !important;  
