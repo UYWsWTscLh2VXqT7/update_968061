@@ -13,7 +13,7 @@ equities, summary = processing.fetch(cfg.data['equities'])
 
 # 加载历史估值数据
 try:
-    with open("history.json", encoding="utf-8") as f:
+    with open("../data/history.json", encoding="utf-8") as f:
         history_data = json.load(f)
 except FileNotFoundError:
     history_data = []
@@ -138,7 +138,7 @@ html += f"""
         <thead>
           <tr>
             <th>日期</th>
-            <th class="text-end">估值涨跌幅</th>
+            <th class="text-end">估值</th>
           </tr>
         </thead>
         <tbody>
