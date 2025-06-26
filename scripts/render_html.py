@@ -36,7 +36,9 @@ html = f"""<!DOCTYPE html>
   <link href="https://fonts.loli.net/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {{ padding: 2rem; 
-    font-family: 'Roboto', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+                 "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }}
     table {{ font-size: 0.9rem; }}
       /* 移除隔行灰色背景 */
