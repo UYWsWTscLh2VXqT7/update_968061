@@ -70,7 +70,7 @@ html = f"""<!DOCTYPE html>
     <p class="text-muted">估值更新于 {update_time}；持仓截至 2025-05-31</p>
     
     <div class="table-responsive mb-5">
-    <table class="table table-bordered custom-table shadow">
+    <table class="table table-bordered custom-table shadow-lg p-3 mb-5 bg-white rounded">
       <thead class="table-light">
         <tr>
           <th>名称</th>
@@ -104,7 +104,8 @@ for eq in equities:
         </tr>
         <tr class="fw-bold">
     """
-    html += f"""
+    
+html += f"""
         <td>总仓位</td>
         <td class="text-end">{total_weight}</td>
         <td class="text-end {color}">{colorize(total_percent)}</td>
@@ -115,6 +116,7 @@ for eq in equities:
         <td class="text-end {color}">{colorize(today_percent)}</td>
         </tr>
     """
+
 html += """
       </tbody>
     </table>
