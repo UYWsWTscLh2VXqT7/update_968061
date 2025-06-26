@@ -39,41 +39,21 @@ html = f"""<!DOCTYPE html>
                  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
                  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }}
-    /* 去掉表格默认边框 */
+    table{{
+      font-size: 0.8rem;
+    }}
+    /* 去掉表格边框 */
     .custom-table {{
-      border-collapse: separate;  /* 用分离边框模式，方便控制间距 */
-      border-spacing: 0;          /* 无间距 */
       border: none !important;    /* 去掉表格外边框 */
     }}
-    
-    /* 列边框，左边框留给第2列及以后 */
-    .custom-table td, .custom-table th {{
-      border-left: 1px solid #dee2e6;
-      border-right: 1px solid #dee2e6;
-      padding: 0.5rem 0.75rem; /* 调整内边距 */
+    .custom-table th,
+    .custom-table td {{
+      border: none !important;
     }}
     
-    /* 第1列左边不需要左边框 */
-    .custom-table td:first-child,
-    .custom-table th:first-child {{
-      border-left: none;
-    }}
-    
-    /* 去掉每行上下边框 */
-    .custom-table tbody tr td {{
-      border-top: none !important;
-      border-bottom: none !important;
-    }}
-    
-    /* 表头去除默认灰色背景，改成白色 */
+    /* 表头去除背景 */
     .custom-table thead th {{
       background-color: white !important;
-      border-top: 1px solid #dee2e6;
-      border-bottom: 1px solid #dee2e6;
-    }}
-    
-    /* 表头字体加粗 */
-    .custom-table thead th {{
       font-weight: 600;
     }}
     
