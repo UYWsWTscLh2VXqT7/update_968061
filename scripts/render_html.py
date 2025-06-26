@@ -14,6 +14,17 @@ equities, summary = processing.fetch(cfg.data['equities'])
 # 获取估值时间
 update_time = summary['last_update'].strftime("%Y-%m-%d %H:%M:%S")
 
+# 处理汇总估值数据
+total_weight = f"{summary['total_weight']:.2f}%"
+total_percent = summary['total_percent']
+today_weight = f"{summary['today_weight']:.2f}%"
+today_percent = summary['today_percent']
+
+def colorize(val):
+    val = float(val)
+    css_class = "text-danger" if val > 0 else "text-success" if val < 0 else "text-muted"
+    return f'<span class="{css_class}">{val:.2f}%</span>'
+
 # HTML头部
 html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -31,6 +42,13 @@ html = f"""<!DOCTYPE html>
   <div class="container">
     <h2 class="mb-3">摩根太平洋科技基金（968061）估值</h2>
     <p class="text-muted">更新于 {update_time}</p>
+    
+    <div class="mb-4">
+      <strong>估值汇总：</strong><br>
+      总仓位：{total_weight}；估算涨跌幅：{colorize(total_percent)}<br>
+      今日开市仓位：{today_weight}；今日涨跌幅：{colorize(today_percent)}
+    </div>
+    
     <table class="table table-striped table-bordered table-hover">
       <thead class="table-light">
         <tr>
@@ -58,6 +76,13 @@ for eq in equities:
     if percent > 0:
         color = "text-danger"
     elif percent < 0:
+        color = "text-success"
+    else:
+        color = "text-muted"
+
+    if change > 0:
+        color = "text-danger"
+    elif change < 0:
         color = "text-success"
     else:
         color = "text-muted"
