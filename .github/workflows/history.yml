@@ -22,7 +22,8 @@ jobs:
         run: pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
 
       - name: Record total_percent to history.json
-        run: python scripts/record_history.py
+        working-directory: scripts
+        run: python record_history.py
 
       - name: Commit and Push
         run: |
