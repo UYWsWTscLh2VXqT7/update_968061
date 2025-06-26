@@ -12,37 +12,38 @@
                  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
     table { font-size: 0.9rem; }
-      /* 移除隔行灰色背景 */
+      .shadow {
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+      }
       .table-striped tbody tr:nth-of-type(odd) {
         background-color: transparent;
       }
-    
-      /* 自定义只保留列边框的效果 */
+      .custom-table {
+        border: none !important;  
+      }
       .custom-table td, .custom-table th {
         border-left: 1px solid #dee2e6;
         border-right: 1px solid #dee2e6;
       }
-    
-      /* 移除每行的顶部和底部边框 */
-      .custom-table tbody tr td {
-        border-top: none;
-        border-bottom: none;
-      }
-    
-      /* 保留表头完整边框 */
       .custom-table thead th {
         border-top: 1px solid #dee2e6;
         border-bottom: 1px solid #dee2e6;
       }
+      .table-wrapper {
+        background: white;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        border-radius: 8px;
+      }
   </style>
+  
 </head>
 <body>
   <div class="container">
     <h2 class="mb-3">摩根太平洋科技（968061）估值</h2>
-    <p class="text-muted">估值更新于 2025-06-26 13:35:27；持仓截至 2025-05-31</p>
+    <p class="text-muted">估值更新于 2025-06-26 13:42:45；持仓截至 2025-05-31</p>
     
-    <div class="table-responsive mb-5">
-    <table class="table table-bordered custom-table shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="table-wrapper shadow rounded p-3">
+    <table class="table custom-table">
       <thead class="table-light">
         <tr>
           <th>名称</th>
@@ -55,7 +56,7 @@
         <tr>
           <td>Tencent Holdings Ltd</td>
           <td class="text-end">6.55%</td>
-          <td class="text-end text-success">-0.78%</td>
+          <td class="text-end text-success">-0.59%</td>
         </tr>
         <tr class="fw-bold">
     
@@ -76,14 +77,14 @@
         <tr>
           <td>SK Hynix Inc</td>
           <td class="text-end">4.04%</td>
-          <td class="text-end text-danger">2.45%</td>
+          <td class="text-end text-danger">2.27%</td>
         </tr>
         <tr class="fw-bold">
     
         <tr>
           <td>Nintendo Co Ltd</td>
           <td class="text-end">3.87%</td>
-          <td class="text-end text-success">-0.34%</td>
+          <td class="text-end text-success">-0.26%</td>
         </tr>
         <tr class="fw-bold">
     
@@ -97,21 +98,21 @@
         <tr>
           <td>Alibaba Group Holding Ltd</td>
           <td class="text-end">3.54%</td>
-          <td class="text-end text-success">-2.42%</td>
+          <td class="text-end text-success">-2.51%</td>
         </tr>
         <tr class="fw-bold">
     
         <tr>
           <td>NAURA Technology Group Co Ltd</td>
           <td class="text-end">3.10%</td>
-          <td class="text-end text-success">-0.39%</td>
+          <td class="text-end text-success">-0.29%</td>
         </tr>
         <tr class="fw-bold">
     
         <tr>
           <td>Xero Ltd</td>
           <td class="text-end">3.00%</td>
-          <td class="text-end text-success">-5.58%</td>
+          <td class="text-end text-success">-4.91%</td>
         </tr>
         <tr class="fw-bold">
     
@@ -124,19 +125,19 @@
     
         <td>总仓位</td>
         <td class="text-end">41.26%</td>
-        <td class="text-end text-success"><span class="text-success">-0.43%</span></td>
+        <td class="text-end text-success"><span class="text-success">-0.36%</span></td>
         </tr>
         <tr>
         <td>今日开市</td>
         <td class="text-end">33.10%</td>
-        <td class="text-end text-success"><span class="text-success">-0.53%</span></td>
+        <td class="text-end text-success"><span class="text-success">-0.44%</span></td>
         </tr>
     
       </tbody>
     </table>
     </div>
     <div class="footer text-muted mt-5 text-center" style="font-size: 0.85rem;">
-      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
+      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
   </div>
 </body>
