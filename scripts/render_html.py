@@ -62,7 +62,7 @@ html = f"""<!DOCTYPE html>
       background: white;
       box-shadow: 0 8px 16px rgba(0,0,0,0.12);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0.8rem;
       overflow-x: auto;  /* 防止横向溢出 */
     }}
   </style>
@@ -71,6 +71,7 @@ html = f"""<!DOCTYPE html>
 <body>
   <div class="container">
     <h5 class="mb-3 text-center">摩根太平洋科技（968061）估值</h5>
+    <p class="text-muted text-center" style="font-size: 0.6rem;">估值更新 {update_time}<br>持仓截至 2025-05-31</p>
     <div class="table-wrapper shadow rounded p-3">
     <table class="table custom-table">
       <thead class="table-light">
@@ -124,7 +125,6 @@ html += f"""
     </table>
     </div>
     <div class="footer text-muted mt-5 text-center" style="font-size: 0.7rem;">
-      <p>估值更新于 {update_time}<br>持仓截至 2025-05-31（摩根仅公开前 10 仓位）</p>
       <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
   </div>
