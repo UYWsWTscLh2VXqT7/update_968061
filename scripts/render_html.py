@@ -33,7 +33,6 @@ html = f"""<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>摩根太平洋科技基金（968061）估值</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.loli.net/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {{ padding: 2rem; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -67,27 +66,15 @@ html = f"""<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <h2 class="mb-3">摩根太平洋科技基金（968061）估值</h2>
-    <p class="text-muted">更新于 {update_time}</p>
+    <h2 class="mb-3">摩根太平洋科技（968061）估值</h2>
+    <p class="text-muted">估值更新于 {update_time}；持仓截至 2025-05-31</p>
     
-    <div class="card shadow-sm mb-4" style="max-width: 600px; margin: 0 auto;">
-    <div class="card-body">
-      <h5 class="card-title">估值汇总</h5>
-      <p class="card-text">
-      总仓位：{total_weight}；估算涨跌幅：{colorize(total_percent)}<br>
-      今日开市仓位：{today_weight}；今日涨跌幅：{colorize(today_percent)}
-      </p>
-    </div>
-    </div>
     <div class="table-responsive">
     <table class="table table-bordered custom-table shadow w-auto mx-auto">
       <thead class="table-light">
         <tr>
-          <th>代码</th>
           <th>名称</th>
           <th>仓位</th>
-          <th>当前价</th>
-          <th>涨跌额</th>
           <th>涨跌幅</th>
         </tr>
       </thead>
@@ -95,12 +82,8 @@ html = f"""<!DOCTYPE html>
 """
 
 for eq in equities:
-    code = eq['code']
     name = eq['name']
     weight = f"{Decimal(eq['weight']):.2f}%"
-    price = f"{Decimal(eq['last']):.2f}"
-    change = float(eq['change'])
-    change_str = f"{change:.2f}"
     percent = float(eq['change_percent'])
     percent_str = f"{percent:.2f}%"
     
@@ -113,21 +96,21 @@ for eq in equities:
     else:
         color = "text-muted"
 
-    if change > 0:
-        color = "text-danger"
-    elif change < 0:
-        color = "text-success"
-    else:
-        color = "text-muted"
-
     html += f"""
         <tr>
-          <td>{code}</td>
           <td>{name}</td>
           <td class="text-end">{weight}</td>
-          <td class="text-end">{price}</td>
-          <td class="text-end {color}">{change_str}</td>
           <td class="text-end {color}">{percent_str}</td>
+        </tr>
+        <tr class="fw-bold">
+        <td>总仓位</td>
+        <td class="text-end">{total_weight}</td>
+        <td class="text-end {color}">{colorize(total_percent)}</td>
+        </tr>
+        <tr>
+        <td>今日开市</td>
+        <td class="text-end">{today_weight}</td>
+        <td class="text-end {color}">{colorize(today_percent)}</td>
         </tr>
     """
 
@@ -136,7 +119,7 @@ html += """
     </table>
     </div>
     <div class="footer text-muted mt-5 text-center" style="font-size: 0.85rem;">
-      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br>powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">https://github.com/xiaopc/qdii-value</a></p>
+      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
   </div>
 </body>
