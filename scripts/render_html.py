@@ -33,8 +33,11 @@ html = f"""<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>摩根太平洋科技基金（968061）估值</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.geekzu.org/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
-    body {{ padding: 2rem; }}
+    body {{ padding: 2rem; 
+    font-family: 'Roboto', sans-serif;
+    }}
     table {{ font-size: 0.9rem; }}
       /* 移除隔行灰色背景 */
       .table-striped tbody tr:nth-of-type(odd) {{
@@ -65,13 +68,13 @@ html = f"""<!DOCTYPE html>
     <h2 class="mb-3">摩根太平洋科技基金（968061）估值</h2>
     <p class="text-muted">更新于 {update_time}</p>
     
-    <div class="mb-4">
+    <div class="card bg-light p-3 mb-4">
       <strong>估值汇总：</strong><br>
       总仓位：{total_weight}；估算涨跌幅：{colorize(total_percent)}<br>
       今日开市仓位：{today_weight}；今日涨跌幅：{colorize(today_percent)}
     </div>
-    
-    <table class="table table-bordered custom-table shadow">
+    <div class="table-responsive">
+    <table class="table table-bordered custom-table shadow w-auto mx-auto">
       <thead class="table-light">
         <tr>
           <th>代码</th>
@@ -115,17 +118,18 @@ for eq in equities:
         <tr>
           <td>{code}</td>
           <td>{name}</td>
-          <td>{weight}</td>
-          <td>{price}</td>
-          <td class="{color}">{change_str}</td>
-          <td class="{color}">{percent_str}</td>
+          <td class="text-end">{weight}</td>
+          <td class="text-end">{price}</td>
+          <td class="text-end {color}">{change_str}</td>
+          <td class="text-end {color}">{percent_str}</td>
         </tr>
     """
 
 html += """
       </tbody>
     </table>
-    <div class="footer">
+    </div>
+    <div class="footer text-muted mt-5 text-center" style="font-size: 0.85rem;">
       <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br>powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">https://github.com/xiaopc/qdii-value</a></p>
     </div>
   </div>
