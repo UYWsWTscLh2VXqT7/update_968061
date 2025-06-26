@@ -69,8 +69,8 @@ html = f"""<!DOCTYPE html>
     <h2 class="mb-3">摩根太平洋科技（968061）估值</h2>
     <p class="text-muted">估值更新于 {update_time}；持仓截至 2025-05-31</p>
     
-    <div class="table-responsive">
-    <table class="table table-bordered custom-table shadow w-auto mx-auto">
+    <div class="table-responsive mb-5">
+    <table class="table table-bordered custom-table shadow">
       <thead class="table-light">
         <tr>
           <th>名称</th>
@@ -103,6 +103,8 @@ for eq in equities:
           <td class="text-end {color}">{percent_str}</td>
         </tr>
         <tr class="fw-bold">
+    """
+    html += f"""
         <td>总仓位</td>
         <td class="text-end">{total_weight}</td>
         <td class="text-end {color}">{colorize(total_percent)}</td>
@@ -113,7 +115,6 @@ for eq in equities:
         <td class="text-end {color}">{colorize(today_percent)}</td>
         </tr>
     """
-
 html += """
       </tbody>
     </table>
