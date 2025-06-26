@@ -76,12 +76,15 @@ for eq in equities:
 html += """
       </tbody>
     </table>
+    <div class="footer">
+      <p>仅计算摩根公开的前 10 仓位，估值仅供参考<br>powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">https://github.com/xiaopc/qdii-value</a></p>
+    </div>
   </div>
 </body>
 </html>
 """
 
-with open("output.html", "w", encoding="utf-8") as f:
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-print("✅ 已保存 output.html")
+print("✅ 已保存 index.html")
