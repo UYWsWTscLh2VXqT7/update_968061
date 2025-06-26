@@ -25,10 +25,10 @@ jobs:
     - name: Cache pip packages
       uses: actions/cache@v3
       with:
-        path: ~/.local
-        key: pip-local-${{ runner.os }}-v1
+        path: ~/.cache/pip
+        key: pip-py310-linux-v1
         restore-keys: |
-          pip-local-${{ runner.os }}-
+          pip-py310-linux-
         
     - name: Install dependencies
       run: |
