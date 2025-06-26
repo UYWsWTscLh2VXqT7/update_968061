@@ -31,7 +31,7 @@ html = f"""<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title class="text-center">摩根太平洋科技基金（968061）估值</title>
+  <title>摩根太平洋科技基金（968061）估值</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {{ padding: 2rem; 
@@ -70,7 +70,7 @@ html = f"""<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <h4 class="mb-3">摩根太平洋科技（968061）估值</h4>
+    <h5 class="mb-3 text-center">摩根太平洋科技（968061）估值</h5>
     <div class="table-wrapper shadow rounded p-3">
     <table class="table custom-table">
       <thead class="table-light">
@@ -119,7 +119,7 @@ html += f"""
         </tr>
     """
 
-html += """
+html += f"""
       </tbody>
     </table>
     </div>
