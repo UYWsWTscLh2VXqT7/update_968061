@@ -49,14 +49,6 @@ html = f"""<!DOCTYPE html>
       .custom-table {{
         border: none !important;  
       }}
-      .custom-table td, .custom-table th {{
-        border-left: 1px solid #dee2e6;
-        border-right: 1px solid #dee2e6;
-      }}
-      .custom-table thead th {{
-        border-top: 1px solid #dee2e6;
-        border-bottom: 1px solid #dee2e6;
-      }}
       .table-wrapper {{
         background: white;
         box-shadow: 0 8px 16px rgba(0,0,0,0.12);
