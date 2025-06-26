@@ -36,6 +36,28 @@ html = f"""<!DOCTYPE html>
   <style>
     body {{ padding: 2rem; }}
     table {{ font-size: 0.9rem; }}
+      /* 移除隔行灰色背景 */
+      .table-striped tbody tr:nth-of-type(odd) {
+        background-color: transparent;
+      }
+    
+      /* 自定义只保留列边框的效果 */
+      .custom-table td, .custom-table th {
+        border-left: 1px solid #dee2e6;
+        border-right: 1px solid #dee2e6;
+      }
+    
+      /* 移除每行的顶部和底部边框 */
+      .custom-table tbody tr td {
+        border-top: none;
+        border-bottom: none;
+      }
+    
+      /* 保留表头完整边框 */
+      .custom-table thead th {
+        border-top: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+      }
   </style>
 </head>
 <body>
@@ -49,7 +71,7 @@ html = f"""<!DOCTYPE html>
       今日开市仓位：{today_weight}；今日涨跌幅：{colorize(today_percent)}
     </div>
     
-    <table class="table table-striped table-bordered table-hover">
+    <table class="table table-bordered custom-table">
       <thead class="table-light">
         <tr>
           <th>代码</th>
