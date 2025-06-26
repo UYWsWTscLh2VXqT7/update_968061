@@ -1,70 +1,87 @@
 import json
-from datetime import datetime
+from decimal import Decimal
 from qdii_value.confs import Config
 from qdii_value import processing
+from datetime import datetime
 
-# 读取 JSON 配置
-with open("968061.json", "r", encoding="utf-8") as f:
+# 加载配置（json 文件名需与基金代码一致）
+with open("968061.json", encoding="utf-8") as f:
     conf = json.load(f)
 
-c = Config(conf)
-equities, summary = processing.fetch(c.data['equities'])
+cfg = Config(conf)
+equities, summary = processing.fetch(cfg.data['equities'])
 
-title = f"{conf.get('_name', '摩根太平洋科技估值')}（{conf.get('_id', '')}）"
-last_update = summary["last_update"].strftime("%Y-%m-%d %H:%M:%S")
-total_percent = summary["total_percent"]
-total_color = "red" if total_percent > 0 else "green"
+# 获取估值时间
+update_time = summary['last_update'].strftime("%Y-%m-%d %H:%M:%S")
 
-# 生成 HTML
+# HTML头部
 html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>{title}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>摩根太平洋科技基金（968061）估值</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {{ padding: 2em; font-family: sans-serif; }}
-    .red {{ color: red; }}
-    .green {{ color: green; }}
-    table {{ width: 100%; border-collapse: collapse; }}
-    th, td {{ padding: 0.5em; border-bottom: 1px solid #ccc; }}
+    body {{ padding: 2rem; }}
+    table {{ font-size: 0.9rem; }}
   </style>
 </head>
 <body>
-  <h2>{title}</h2>
-  <p>更新时间：{last_update}</p>
-  <p>估值涨跌幅：<span class="{total_color}">{total_percent:.2%}</span></p>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>股票代码</th>
-        <th>名称</th>
-        <th>最新价格</th>
-        <th>涨跌幅</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="container">
+    <h2 class="mb-3">摩根太平洋科技基金（968061）估值</h2>
+    <p class="text-muted">更新于 {update_time}</p>
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>代码</th>
+          <th>名称</th>
+          <th>仓位</th>
+          <th>当前价</th>
+          <th>涨跌额</th>
+          <th>涨跌幅</th>
+        </tr>
+      </thead>
+      <tbody>
 """
 
 for eq in equities:
-    pct = eq["change_percent"]
-    color = "red" if pct > 0 else "green"
-    html += f"""<tr>
-      <td>{eq['code']}</td>
-      <td>{eq['name']}</td>
-      <td>{eq['last']}</td>
-      <td class="{color}">{pct:.2%}</td>
-    </tr>"""
+    code = eq['code']
+    name = eq['name']
+    weight = f"{Decimal(eq['weight']):.2f}%"
+    price = f"{Decimal(eq['last']):.2f}"
+    change = f"{Decimal(eq['change']):.2f}"
+    percent = float(eq['change_percent'])
+    percent_str = f"{percent:.2f}%"
+
+    # 颜色设定
+    if percent > 0:
+        color = "text-danger"
+    elif percent < 0:
+        color = "text-success"
+    else:
+        color = "text-muted"
+
+    html += f"""
+        <tr>
+          <td>{code}</td>
+          <td>{name}</td>
+          <td>{weight}</td>
+          <td>{price}</td>
+          <td>{change}</td>
+          <td class="{color}">{percent_str}</td>
+        </tr>
+    """
 
 html += """
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
 """
 
-with open("index.html", "w", encoding="utf-8") as f:
+with open("output.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-print("✅ Saved index.html")
+print("✅ 已保存 output.html")
