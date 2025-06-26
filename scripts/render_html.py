@@ -105,18 +105,18 @@ for eq in equities:
           <td class="text-end">{weight}</td>
           <td class="text-end {color}">{percent_str}</td>
         </tr>
-        <tr class="fw-bold">
     """
     
 html += f"""
-        <td>总仓位</td>
-        <td class="text-end">{total_weight}</td>
-        <td class="text-end {color}">{colorize(total_percent)}</td>
+        <tr class="fw-bold">
+          <td>总仓位</td>
+          <td class="text-end">{total_weight}</td>
+          <td class="text-end {color}">{colorize(total_percent)}</td>
         </tr>
         <tr>
-        <td>今日开市</td>
-        <td class="text-end">{today_weight}</td>
-        <td class="text-end {color}">{colorize(today_percent)}</td>
+          <td>今日开市</td>
+          <td class="text-end">{today_weight}</td>
+          <td class="text-end {color}">{colorize(today_percent)}</td>
         </tr>
     """
 
