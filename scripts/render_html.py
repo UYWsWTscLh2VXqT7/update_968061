@@ -62,7 +62,7 @@ html = f"""<!DOCTYPE html>
       background: white;
       box-shadow: 0 8px 16px rgba(0,0,0,0.12);
       border-radius: 8px;
-      padding: 0.8rem;
+      padding: 0.5rem;
       overflow-x: auto;  /* 防止横向溢出 */
     }}
   </style>
