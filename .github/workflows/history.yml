@@ -1,0 +1,34 @@
+# .github/workflows/history.yml
+name: Record Daily History
+
+on:
+  schedule:
+    - cron: '0 20 * * *'  # 每天 04:00 中国时间（UTC+8）
+  workflow_dispatch:
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
+
+      - name: Record total_percent to history.json
+        run: python scripts/record_history.py
+
+      - name: Commit and Push
+        run: |
+          cp scripts/history.json  data/history.json 
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add data/history.json
+          git commit -m "📈 更新历史估值记录 $(date +'%Y-%m-%d')"
+          git push

@@ -11,6 +11,14 @@ with open("968061.json", encoding="utf-8") as f:
 cfg = Config(conf)
 equities, summary = processing.fetch(cfg.data['equities'])
 
+# 加载历史估值数据
+try:
+    with open("history.json", encoding="utf-8") as f:
+        history_data = json.load(f)
+except FileNotFoundError:
+    history_data = []
+
+
 # 获取估值时间
 update_time = summary['last_update'].strftime("%Y-%m-%d %H:%M:%S")
 
@@ -124,6 +132,34 @@ html += f"""
       </tbody>
     </table>
     </div>
+    <div class="table-wrapper shadow rounded p-3 mt-4">
+      <p class="text-muted mb-1" style="font-size: 0.7rem;">历史估值</p>
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th class="text-end">估值涨跌幅</th>
+          </tr>
+        </thead>
+        <tbody>
+"""
+
+for record in reversed(history_data[-30:]):  # 显示最近30天
+    date = record["date"]
+    val = float(record["total_percent"])
+    color = "text-danger" if val > 0 else "text-success" if val < 0 else "text-muted"
+    html += f"""
+          <tr>
+            <td>{date}</td>
+            <td class="text-end {color}">{val:.2f}%</td>
+          </tr>
+    """
+
+html += """
+        </tbody>
+      </table>
+    </div>
+
     <div class="footer text-muted mt-5 text-center" style="font-size: 0.7rem;">
       <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
