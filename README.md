@@ -6,7 +6,8 @@ QDII 基金估值程序由 https://github.com/xiaopc/qdii-value 提供，非常�
 暂时只提供 968061 的实时和历史估值，需要其他 QDII 基金数据的，可以 fork 或 download 项目后修改 json 配置文件以及对应的 python 脚本，详见[项目架构](#项目架构)和[使用](#使用)章节。若无网页需求，亦可直接使用原作者的项目，在本地查看数据。
 
 <h3>Demo</h3>
-<a>https://q.599254.xyz </a>
+
+<a>https://q.599254.xyz</a>
 
 <h3>ToDo</h3>
 
@@ -54,7 +55,7 @@ QDII 基金估值程序由 https://github.com/xiaopc/qdii-value 提供，非常�
 
 <h3>维护说明</h3>
 
-本项目的核心功能并非本人开发，而附加功能已完成本人的需求，因此在本 README 完成后将进入维护期，不再更新功能。后须将视脚本运行情况修复 bug。本人仅有能力维护项目的附加功能，如下：
+本项目的核心功能并非本人开发。附加功能由本人开发，已完成本人的需求，因此在本 README 完成后将进入维护期，不再更新功能。后须将视脚本运行情况修复 bug。
 
 核心功能：获取实时估值，是直接使用 https://github.com/xiaopc/qdii-value 提供的 python 程序获取。本人未对 qdii-value 项目源代码进行任何修改，亦未做出任何贡献。若本项目对您有帮助，请您赞助和支持 qdii-value 原作者。
 
