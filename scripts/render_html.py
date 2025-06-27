@@ -141,7 +141,7 @@ for entry in history_data:
     except (TypeError, ValueError):
         continue
 
-mean_error_text = f"{round(sum(errors) / len(errors), 4)}%" if errors else "—"
+mean_error_text = f"{round(sum(errors) / len(errors), 2)}%" if errors else "—"
 
 # === 预测成功率统计 ===
 success = 0
@@ -165,7 +165,7 @@ for entry in history_data:
 total_cases = success + fail
 if total_cases > 0:
     accuracy_pct = round(success / total_cases * 100, 2)
-    accuracy_text = f"{accuracy_pct}%"
+    accuracy_text = f"{accuracy_pct:.2f}%"
 else:
     accuracy_text = "—"
 
