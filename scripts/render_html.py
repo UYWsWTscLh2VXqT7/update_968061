@@ -78,8 +78,8 @@ html = f"""<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <p class="mb-1 text-center">摩根太平洋科技（968061）估值</p>
     <div class="table-wrapper shadow rounded p-3">
+    <p class="text-muted mb-1" style="font-size: 0.7rem;">摩根太平洋科技（968061）估值</p>
     <p class="text-muted mb-1" style="font-size: 0.7rem;">更新于 {update_time}</p>
     <table class="table custom-table">
       <thead class="table-light">
@@ -127,19 +127,63 @@ html += f"""
           <td class="text-end {color}">{colorize(today_percent)}</td>
         </tr>
     """
+# === 净值误差统计 ===
+errors = []
+for entry in history_data:
+    estimate = entry.get("total_percent")
+    nav = entry.get("nav_change_pct")
+    try:
+        est_val = float(estimate)
+        nav_val = float(nav)
+        if nav_val != 0:
+            error_pct = abs(est_val - nav_val) / abs(nav_val) * 100
+            errors.append(error_pct)
+    except (TypeError, ValueError):
+        continue
+
+mean_error_text = f"{round(sum(errors) / len(errors), 4)}%" if errors else "—"
+
+# === 预测成功率统计 ===
+success = 0
+fail = 0
+
+for entry in history_data:
+    est = entry.get("total_percent")
+    nav = entry.get("nav_change_pct")
+    try:
+        est_val = float(est)
+        nav_val = float(nav)
+        if est_val == 0 or nav_val == 0:
+            continue  # 不计入
+        if (est_val > 0 and nav_val > 0) or (est_val < 0 and nav_val < 0):
+            success += 1
+        else:
+            fail += 1
+    except (TypeError, ValueError):
+        continue
+
+total_cases = success + fail
+if total_cases > 0:
+    accuracy_pct = round(success / total_cases * 100, 2)
+    accuracy_text = f"{accuracy_pct}%"
+else:
+    accuracy_text = "—"
+
 
 html += f"""
       </tbody>
     </table>
-    <p class="text-muted mb-1" style="font-size: 0.7rem;">持仓截至 2025-05-31</p>
+    <p class="text-muted mb-1 text-end" style="font-size: 0.7rem;">持仓截至 2025-05-31</p>
     </div>
     <div class="table-wrapper shadow rounded p-3 mt-4">
       <p class="text-muted mb-1" style="font-size: 0.7rem;">历史估值</p>
+      <p class="text-muted mb-1" style="font-size: 0.7rem;">估值平均误差约 {mean_error_text}，涨跌预测成功率约 {accuracy_text}</p>
       <table class="table custom-table">
         <thead>
           <tr>
             <th>日期</th>
             <th class="text-end">估值</th>
+            <th class="text-end">净值</th>
           </tr>
         </thead>
         <tbody>
@@ -148,23 +192,32 @@ html += f"""
 for record in reversed(history_data[-30:]):  # 显示最近30天
     date = record["date"]
     val = float(record["total_percent"])
+    nav_change_raw = record.get("nav_change_pct", 0.0)
+    # 判断是否为数字，否则直接展示原文
+    try:
+        nav_change_pct_val = float(nav_change_raw)
+        nav_change_pct = f"{nav_change_pct_val:.2f}%"
+        nav_color = "text-danger" if nav_change_pct_val > 0 else "text-success" if nav_change_pct_val < 0 else "text-muted"
+    except (ValueError, TypeError):
+        nav_change_pct = str(nav_change_raw)
+        nav_color = ""  # 文字时不加颜色
     color = "text-danger" if val > 0 else "text-success" if val < 0 else "text-muted"
     html += f"""
           <tr>
             <td>{date}</td>
             <td class="text-end {color}">{val:.2f}%</td>
+            <td class="text-end {nav_color}">{nav_change_pct}</td>
           </tr>
     """
 
 html += """
         </tbody>
       </table>
-    </div>
-
-    <div class="footer text-muted mt-5 text-center" style="font-size: 0.7rem;">
+      <p class="text-muted mb-1 text-end" style="font-size: 0.7rem;">净值由美元换算后会有些许出入</p>
+  </div>
+      <div class="footer text-muted mt-5 text-center" style="font-size: 0.7rem;">
       <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>
-  </div>
 </body>
 </html>
 """

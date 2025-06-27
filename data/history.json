@@ -1,6 +1,14 @@
 [
   {
     "date": "2025-06-26",
-    "total_percent": -0.18
+    "total_percent": -0.18,
+    "nav": "97.82",
+    "nav_change_pct": 1.085
+  },
+  {
+    "date": "2025-06-25",
+    "total_percent": 0.77,
+    "nav": "96.77",
+    "nav_change_pct": 0.7916
   }
 ]
