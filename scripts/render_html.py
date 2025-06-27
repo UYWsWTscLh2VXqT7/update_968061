@@ -177,7 +177,7 @@ html += f"""
     </div>
     <div class="table-wrapper shadow rounded p-3 mt-4">
       <p class="text-muted mb-1" style="font-size: 0.7rem;">历史估值</p>
-      <p class="text-muted mb-1" style="font-size: 0.7rem;">估值平均误差约 {mean_error_text}，涨跌预测成功率约 {accuracy_text}</p>
+      <p class="text-muted mb-1" style="font-size: 0.7rem;">平均误差 {mean_error_text}，涨跌正确率 {accuracy_text}</p>
       <table class="table custom-table">
         <thead>
           <tr>

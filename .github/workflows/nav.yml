@@ -3,7 +3,7 @@ name: Record Nav History
 
 on:
   schedule:
-    - cron: '*/30 3-4 * * *'  # 每天 04:00 中国时间（UTC+8）
+    - cron: '*/30 3-4 * * *'  # 每天 11~13 每半小时查询一次
   workflow_dispatch:
 
 jobs:
@@ -31,5 +31,9 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add data/history.json
-          git commit -m "📈 更新净值 $(date +'%Y-%m-%d')"
-          git push
+          if git diff --cached --quiet; then
+            echo "✅ 没有变更，跳过提交。"
+          else
+            git commit -m "📈 更新净值 $(date +'%Y-%m-%d')"
+            git push
+          fi
