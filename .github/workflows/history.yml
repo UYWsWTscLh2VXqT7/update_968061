@@ -3,7 +3,7 @@ name: Record Daily History
 
 on:
   schedule:
-    - cron: '0 20 * * 1-4'  # 周一-周五 04:00 中国时间（UTC+8）
+    - cron: '0 20 * * 0-4'  # 周一-周五 04:00 中国时间（UTC+8）
   workflow_dispatch:
 
 jobs:
