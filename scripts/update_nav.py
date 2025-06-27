@@ -5,52 +5,32 @@ from datetime import datetime
 import ast
 
 HISTORY_FILE = "../data/history.json"
-JS_URL = "https://www.stockq.org/funds/fund/jpmorgan/js/J015_nav.js"
+#JS_URL = "https://www.stockq.org/funds/fund/jpmorgan/js/J015_nav.js"
+URL = "https://www.moneydj.com/funddj/bcd/BCDNavList.djbcd?a=jfz57"
 
 # 在线获取JS文件内容
-resp = requests.get(JS_URL)
+resp = requests.get(URL)
 resp.encoding = "utf-8"
-js_code = resp.text
+line = resp.text.strip()
 
-# 正则提取 data1M 数组的内容
-pattern = re.compile(r"var\s+data1M\s*=\s*google\.visualization\.arrayToDataTable\(\s*(\[[\s\S]*?\])\s*\);")
-
-match = pattern.search(js_code)
-if not match:
-    print("❌ 没找到 data1M 数组")
-    exit(1)
-
-array_text = match.group(1)
-
-# 替换 new Date('May 29, 2025') 为 '2025-05-29'
-def replace_date(m):
-    date_str = m.group(1)
-    dt = datetime.strptime(date_str, "%b %d, %Y")
-    return f"'{dt.strftime('%Y-%m-%d')}'"
-
-array_text = re.sub(r"new Date\('([^']+)'\)", replace_date, array_text)
-
-# 解析成python列表
 try:
-    data_list = ast.literal_eval(array_text)
-except Exception as e:
-    print("❌ 解析JS数组失败:", e)
-    exit(1)
+    date_part, nav_part = line.split(' ', 1)
+except ValueError:
+    raise ValueError("❌ 数据格式异常，无法拆分日期和净值")
 
-# 去除表头
-header = data_list.pop(0)
+date_strs = date_part.split(',')
+nav_strs = nav_part.split(',')
 
-# 构造日期->净值映射
+# 构造 date → nav 映射
 nav_map = {}
-for row in data_list:
-    if len(row) < 2:
-        continue
-    date_str = row[0]
-    price = row[1]
-    if isinstance(date_str, str) and (isinstance(price, float) or isinstance(price, int)):
-        nav_map[date_str] = float(price)
+for d, v in zip(date_strs, nav_strs):
+    try:
+        date_fmt = datetime.strptime(d.strip(), "%Y%m%d").strftime("%Y-%m-%d")
+        nav_map[date_fmt] = float(v.strip())
+    except Exception as e:
+        print(f"⚠️ 跳过无法解析的项: {d} -> {v} ({e})")
 
-print(f"✅ 成功解析data1M，共{len(nav_map)}条净值数据")
+print(f"✅ 成功解析 {len(nav_map)} 条净值数据")
 
 # 读取历史文件
 with open(HISTORY_FILE, encoding="utf-8") as f:
