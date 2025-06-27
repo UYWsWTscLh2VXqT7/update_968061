@@ -19,7 +19,7 @@ new_record = {
 
 
 # 追加到历史记录
-history_file = "history.json"
+history_file = "../data/history.json"
 try:
     with open(history_file, "r", encoding="utf-8") as f:
         history = json.load(f)

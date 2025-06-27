@@ -1,5 +1,5 @@
 # .github/workflows/history.yml
-name: Record Daily History
+name: Record Nav History
 
 on:
   schedule:
@@ -18,17 +18,14 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
-        run: pip install --upgrade git+https://github.com/xiaopc/qdii-value.git#egg=qdii_value
-
       - name: Record total_percent to history.json
         working-directory: scripts
-        run: python record_history.py
+        run: python update_nav.py
 
       - name: Commit and Push
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add data/history.json
-          git commit -m "📈 更新历史估值记录 $(date +'%Y-%m-%d')"
+          git commit -m "📈 更新净值 $(date +'%Y-%m-%d')"
           git push
