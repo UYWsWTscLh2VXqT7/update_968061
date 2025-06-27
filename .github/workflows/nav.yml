@@ -3,7 +3,7 @@ name: Record Nav History
 
 on:
   schedule:
-    - cron: '*/30 3-4 * * *'  # 每天 11~13 每半小时查询一次
+    - cron: '*/30 3-4 * * 1-5'  # 每天 11~13 每半小时查询一次
   workflow_dispatch:
 
 jobs:
