@@ -3,7 +3,7 @@ name: Record Nav History
 
 on:
   schedule:
-    - cron: '0 20 * * *'  # 每天 04:00 中国时间（UTC+8）
+    - cron: '*/30 3-4 * * *'  # 每天 04:00 中国时间（UTC+8）
   workflow_dispatch:
 
 jobs:
