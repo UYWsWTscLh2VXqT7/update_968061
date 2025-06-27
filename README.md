@@ -18,6 +18,7 @@ QDII 基金估值程序由 https://github.com/xiaopc/qdii-value 提供，非常�
 
 <h3>项目架构</h3>
 
+```
 .
 ├── .github
 │   └── workflows
@@ -32,6 +33,7 @@ QDII 基金估值程序由 https://github.com/xiaopc/qdii-value 提供，非常�
     ├── record_history.py
     ├── render_html.py
     └── update_nav.py
+```
 
 - history.yml：Actions 脚本，调用 record_history.py
 - nav.yml：Actions 脚本，调用 update_nav.py
