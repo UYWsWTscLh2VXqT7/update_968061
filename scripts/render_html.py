@@ -192,7 +192,7 @@ html += f"""
 for record in reversed(history_data[-30:]):  # 显示最近30天
     date = record["date"]
     val = float(record["total_percent"])
-    nav_change_raw = record.get("nav_change_pct", 0.0)
+    nav_change_raw = record.get("nav_change_pct", "暂未公布")
     # 判断是否为数字，否则直接展示原文
     try:
         nav_change_pct_val = float(nav_change_raw)
