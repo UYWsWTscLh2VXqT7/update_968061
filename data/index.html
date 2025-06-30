@@ -37,7 +37,7 @@
   <div class="tables-flex">
     <div class="table-wrapper shadow rounded p-3" id="realtime-wrapper">
       <p class="text-muted mb-1 info-wrapper" style="font-size: 0.7rem;">摩根太平洋科技（968061）估值</p>
-      <p class="text-muted mb-1 info-wrapper" id="update-time" style="font-size: 0.7rem;">加载中...</p>
+      <p class="text-muted mb-1 info-wrapper" id="update-time" style="font-size: 0.7rem;">加载中...长时间未加载请刷新网页</p>
       <table class="table custom-table">
         <thead class="table-light">
           <tr>
@@ -66,7 +66,7 @@
     </div>
     <div class="table-wrapper shadow rounded p-3" id="history-wrapper">
       <p class="text-muted mb-1 info-wrapper" style="font-size: 0.7rem;">历史估值</p>
-      <p class="text-muted mb-1 info-wrapper" id="history-stats" style="font-size: 0.7rem;">加载中...</p>
+      <p class="text-muted mb-1 info-wrapper" id="history-stats" style="font-size: 0.7rem;">加载中...长时间未加载请刷新网页</p>
       <table class="table custom-table">
         <thead>
           <tr>
@@ -82,8 +82,8 @@
       <p class="text-muted mb-1 text-end info-wrapper" style="font-size: 0.7rem;">净值由美元换算后会有些许出入</p>
     </div>
     </div>
-    <div class="footer text-muted mt-5 text-center" style="font-size: 0.7rem;">
-      <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">开源地址</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
+    <div class="footer text-muted mt-5 text-center">
+      <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">问题反馈及开源地址</a><br>powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>  
     </div>
     <script>
@@ -171,8 +171,8 @@
           document.getElementById("today-weight").innerText = parseFloat(data.summary.today_weight).toFixed(2) + "%";
           document.getElementById("today-percent").innerHTML = `<span class="${colorize(data.summary.today_percent)}">${parseFloat(data.summary.today_percent).toFixed(2)}%</span>`;
         } catch (e) {
-          document.getElementById("update-time").innerText = "数据加载失败";
-          document.getElementById("equity-tbody").innerHTML = `<tr><td colspan="3">加载失败</td></tr>`;
+          document.getElementById("update-time").innerText = "数据加载失败，请联系站长";
+          document.getElementById("equity-tbody").innerHTML = `<tr><td colspan="3">数据加载失败，请联系站长</td></tr>`;
         }
       }
     async function loadHistory() {
@@ -225,8 +225,8 @@
           `;
         });
       } catch (e) {
-        document.getElementById("history-stats").innerText = "数据加载失败";
-        document.getElementById("history-tbody").innerHTML = `<tr><td colspan="3">加载失败</td></tr>`;
+        document.getElementById("history-stats").innerText = "数据加载失败，请联系站长";
+        document.getElementById("history-tbody").innerHTML = `<tr><td colspan="3">数据加载失败，请联系站长</td></tr>`;
       }
     }
     loadRealtime();
