@@ -2,8 +2,8 @@
 name: Record Daily History
 
 on:
-  schedule:
-    - cron: '0 20 * * 1-5'  # 周二-周六 04:00 中国时间（UTC+8）
+  #schedule:
+  #  - cron: '0 20 * * 1-5'  # 周二-周六 04:00 中国时间（UTC+8）
   workflow_dispatch:
 
 jobs:
