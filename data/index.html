@@ -11,36 +11,75 @@
     .custom-table th, .custom-table td { border: none !important; padding: 0.1rem 0.1rem; }
     .custom-table thead th { background-color: white !important; font-weight: 600; }
     .table-wrapper { background: white; box-shadow: 0 8px 16px rgba(0,0,0,0.12); border-radius: 8px; overflow-x: auto; }
+    #data-content.hide { display: none; }
+    #loading-mask { min-height: 3rem; }
+    #realtime-wrapper {
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+    }
+    #history-wrapper {
+      width: 100%;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+    }
     .tables-flex { display: block; }
     @media (min-width: 992px) {
       .tables-flex {
         display: flex;
-        gap: 0;
+        gap: 1rem;
         justify-content: flex-start;
         align-items: flex-start;
       }
       #history-wrapper {
         margin-top: 0 !important;
+        flex: 1; /* 让历史估值卡片自动撑满 */
+        max-width: none;
+        width: auto;
+      }
+        #history-wrapper table {
+        width: 100%;
+      }
+    }
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      .tables-flex {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .table-wrapper {
+        width: 100%;
+        margin: 0 0 1rem 0;
+        max-width: 100%;
+        padding: 1rem;
+      }
+        #realtime-wrapper {
+        max-width: 100% !important;
       }
     }
     @media (min-width: 768px) {
       .custom-table th, .custom-table td { padding: 0.5rem 1rem !important; }
       .info-wrapper { padding: 0.1rem 1rem; }
     }
-    .table-wrapper:not(:last-child) {
-       margin-bottom: 1rem;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-  <div class="alert alert-info text-center" role="alert" style="font-size:0.8rem;">
-      开市期间数据实时更新。仅供参考，不构成任何投资建议。
+  <div class="alert alert-info text-center" role="alert" style="font-size:0.8rem;margin-top:1rem;">
+      数据仅供参考，不构成投资建议。
   </div>
+  <div id="loading-mask" style="display:none;text-align:center;margin:2rem 0;">
+    <span id="refreshing-tip" style="font-size:0.9em;"></span>
+  </div>
+  <div id="data-content">
   <div class="tables-flex">
     <div class="table-wrapper shadow rounded p-3" id="realtime-wrapper">
-      <p class="text-muted mb-1 info-wrapper" style="font-size: 0.7rem;">摩根太平洋科技（968061）估值</p>
-      <p class="text-muted mb-1 info-wrapper" id="update-time" style="font-size: 0.7rem;">加载中...长时间未加载请刷新网页</p>
+      <p class="text-muted mb-1 info-wrapper" style="font-size: 0.7rem;font-weight: 600;">摩根太平洋科技（968061）估值</p>
+      <p class="text-muted mb-1 info-wrapper" id="update-time-wrapper" style="font-size: 0.7rem;">
+        <span id="update-time">加载中...</span>
+        <span id="refreshing-tip" style="display:none;font-size:0.9em;"></span>
+      </p>
       <table class="table custom-table">
         <thead class="table-light">
           <tr>
@@ -50,7 +89,7 @@
           </tr>
         </thead>
         <tbody id="equity-tbody">
-          <tr><td colspan="3">加载中...</td></tr>
+          <tr><td colspan="3">加载中...长时间未加载请刷新网页</td></tr>
         </tbody>
         <tfoot>
           <tr class="fw-bold">
@@ -65,11 +104,11 @@
           </tr>
         </tfoot>
       </table>
-      <p class="text-muted mb-1 text-end info-wrapper" style="font-size: 0.7rem;">持仓截至 2025-05-31</p>
+      <p class="text-muted mb-1 info-wrapper text-end" style="font-size: 0.7rem;">持仓截至 2025-05-31</p>
     </div>
     <div class="table-wrapper shadow rounded p-3" id="history-wrapper">
-      <p class="text-muted mb-1 info-wrapper" style="font-size: 0.7rem;">历史估值</p>
-      <p class="text-muted mb-1 info-wrapper" id="history-stats" style="font-size: 0.7rem;">加载中...长时间未加载请刷新网页</p>
+      <p class="text-muted mb-1 info-wrapper" style="font-size: 0.7rem;font-weight: 600;">历史估值</p>
+      <p class="text-muted mb-1 info-wrapper" id="history-stats" style="font-size: 0.7rem;">加载中...</p>
       <table class="table custom-table">
         <thead>
           <tr>
@@ -79,23 +118,98 @@
           </tr>
         </thead>
         <tbody id="history-tbody">
-          <tr><td colspan="3">加载中...</td></tr>
+          <tr><td colspan="3">加载中...长时间未加载请刷新网页</td></tr>
         </tbody>
       </table>
       <p class="text-muted mb-1 text-end info-wrapper" style="font-size: 0.7rem;">净值由美元换算后会有些许出入</p>
     </div>
     </div>
+    </div>
     <div class="footer text-muted mt-5 text-center">
-      <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">问题反馈及开源地址</a><br>powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
+      <p><a href="https://github.com/UYWsWTscLh2VXqT7/update_968061" target="_blank">问题反馈</a>，powered by <a href="https://github.com/xiaopc/qdii-value" target="_blank">qdii-value</a></p>
     </div>  
     </div>
     <script>
+    // 访问频率限制：1分钟内超过5次则封禁10分钟
+    (function () {
+      const key = 'visitTimestamps';
+      const banKey = 'visitBanUntil';
+      const now = Date.now();
+
+      // 检查是否被封禁
+      const banUntil = parseInt(localStorage.getItem(banKey) || '0', 10);
+      if (banUntil && now < banUntil) {
+        alert("数据会自动更新，请勿频繁刷新网页。");
+        document.body.innerHTML = '<div style="color:red;text-align:center;margin-top:2rem;">您因频繁刷新已被封禁，请 10 分钟后再试。实时估值会自动刷新，您不需要手动刷新网页。</div>';
+        throw new Error("访问被封禁");
+      }
+
+      // 记录访问
+      let arr = [];
+      try {
+        arr = JSON.parse(localStorage.getItem(key)) || [];
+      } catch (e) {
+        arr = [];
+      }
+      // 只保留1分钟内的记录
+      arr = arr.filter(ts => now - ts < 60 * 1000);
+      arr.push(now);
+      localStorage.setItem(key, JSON.stringify(arr));
+
+      if (arr.length > 5) {
+        // 封禁10分钟
+        localStorage.setItem(banKey, (now + 10 * 60 * 1000).toString());
+        alert("数据会自动更新，请勿频繁刷新网页。");
+        document.body.innerHTML = '<div style="color:red;text-align:center;margin-top:2rem;">您因频繁刷新已被封禁，请 10 分钟后再试。实时估值会自动刷新，您不需要手动刷新网页。</div>';
+        throw new Error("访问被封禁");
+      }
+    })();
+
+      // 刷新动画
+      function showRefreshingTip(show) {
+        const tip = document.getElementById("refreshing-tip");
+        const loadingMask = document.getElementById("loading-mask");
+        const dataContent = document.getElementById("data-content");
+        if (!tip || !loadingMask || !dataContent) return;
+        if (show) {
+          loadingMask.style.display = "";
+          tip.innerHTML = '<svg style="vertical-align:middle;animation:spin 1s linear infinite;" width="24" height="24" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#007bff" stroke-width="2" fill="none" opacity="0.3"/><path d="M15 8A7 7 0 1 1 8 1" stroke="#007bff" stroke-width="2" fill="none"/></svg> <span style="font-size:1.1em;">正在加载...</span>';
+          dataContent.classList.add("hide");
+        } else {
+          loadingMask.style.display = "none";
+          tip.innerHTML = "";
+          dataContent.classList.remove("hide");
+        }
+      }
+      // 加入旋转动画样式
+      const style = document.createElement('style');
+      style.innerHTML = '@keyframes spin{100%{transform:rotate(360deg);}}';
+      document.head.appendChild(style);
+
+      async function refreshAll() {
+        showRefreshingTip(true);
+        try {
+          await Promise.all([
+            (async () => {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+            })(),
+            loadRealtime(),
+            showOssRealtimeMtime()
+          ]);
+        } finally {
+          showRefreshingTip(false);
+        }
+      }
+      refreshAll(); // 页面一加载就显示动画并刷新
+      setInterval(refreshAll, 6 * 60 * 1000);
+
       function colorize(val) {
         val = parseFloat(val);
         if (val > 0) return 'text-danger';
         if (val < 0) return 'text-success';
         return 'text-muted';
       }
+
       function cleanName(name) {
         // 反复去除无意义单词，直到全部去掉
         let pattern = /(\s|^)(ltd|co\s+ltd|co|holding|holdings|inc|corp|corporation|plc|group|company)(\s|\.|,|$)/gi;
@@ -111,43 +225,53 @@
         return cleaned;
       }
 
-      // 判断是否为移动端
-      const isMobile = window.innerWidth < 768;
+      let updateTimeText = ""; // 源时间（data.update_time）
+      let ossMtimeText = ""; // OSS更新时间（Last-Modified）
 
-      // 动态调整样式
-      function applyResponsiveStyle() {
-        if (isMobile) {
-          document.body.style.fontSize = "0.8rem";
-          document.body.style.padding = "2rem";
-          document.querySelectorAll('.table-wrapper').forEach(el => {
-            el.style.display = "";
-            el.style.margin = "";
-            el.style.maxWidth = "";
-            el.style.width = "100%";
-            el.style.padding = "0.2rem 0.5rem";
-          });
-          document.querySelectorAll('table').forEach(tb => {
-            tb.style.width = "100%";
-            tb.style.margin = "";
-          });
-        } else {
-          document.body.style.fontSize = "1rem";
-          document.body.style.padding = "2rem";
-          document.querySelectorAll('.table-wrapper').forEach(el => {
-            el.style.display = "table";
-            el.style.margin = "auto";
-            el.style.maxWidth = "900px";
-            el.style.width = "auto";
-            el.style.padding = "2rem";
-          });
-          document.querySelectorAll('table').forEach(tb => {
-            tb.style.width = "auto";
-            tb.style.margin = "0 auto";
-          });
+      function renderUpdateTime() {
+        let txt = "";
+        if (ossMtimeText && ossMtimeText !== "加载失败") {
+          // 转北京时间并格式化为 yyyy-mm-dd HH:MM:SS
+          let ossDate = new Date(ossMtimeText);
+          if (!isNaN(ossDate.getTime())) {
+            ossDate.setHours(ossDate.getHours());
+            let y = ossDate.getFullYear();
+            let m = String(ossDate.getMonth() + 1).padStart(2, '0');
+            let d = String(ossDate.getDate()).padStart(2, '0');
+            let h = String(ossDate.getHours()).padStart(2, '0');
+            let min = String(ossDate.getMinutes()).padStart(2, '0');
+            let s = String(ossDate.getSeconds()).padStart(2, '0');
+            txt += `${y}-${m}-${d} ${h}:${min}:${s}`;
+          } else {
+            txt += ossMtimeText;
+          }
+        } else if (ossMtimeText) {
+          txt += ossMtimeText;
+        }
+        if (updateTimeText) {
+          if (txt) txt += " | ";
+          txt += "数据源: " + updateTimeText;
+        }
+        document.getElementById("update-time").innerText = txt || "加载中...";
+      }
+
+      // 加载OSS realtime.json的更新时间
+      async function showOssRealtimeMtime() {
+        const url = "https://hk-ob-test.oss-cn-hongkong.aliyuncs.com/qdii/realtime.json";
+        try {
+          const resp = await fetch(url + '?_t=' + Date.now(), { method: 'HEAD' });
+          const mtime = resp.headers.get('Last-Modified');
+          if (mtime) {
+            ossMtimeText = mtime;
+          } else {
+            ossMtimeText = "加载失败";
+          }
+          renderUpdateTime();
+        } catch (e) {
+          ossMtimeText = "加载失败";
+          renderUpdateTime();
         }
       }
-      applyResponsiveStyle();
-      window.addEventListener('resize', applyResponsiveStyle);
 
       // 加载实时数据
       async function loadRealtime() {
@@ -155,14 +279,15 @@
         try {
           const resp = await fetch(url + '?_t=' + Date.now());
           const data = await resp.json();
-          document.getElementById("update-time").innerText = "更新于 " + data.update_time;
+          updateTimeText = data.update_time.split(" ")[1];
+          renderUpdateTime();
           // 渲染表格
           const tbody = document.getElementById("equity-tbody");
           tbody.innerHTML = "";
           data.equities.forEach(eq => {
             tbody.innerHTML += `
               <tr>
-                <td>${isMobile ? cleanName(eq.name) : eq.name}</td>
+                <td>${window.innerWidth < 768 ? cleanName(eq.name) : eq.name}</td>
                 <td class="text-end">${parseFloat(eq.weight).toFixed(2)}%</td>
                 <td class="text-end ${colorize(eq.change_percent)}">${parseFloat(eq.change_percent).toFixed(2)}%</td>
               </tr>
@@ -174,10 +299,11 @@
           document.getElementById("today-weight").innerText = parseFloat(data.summary.today_weight).toFixed(2) + "%";
           document.getElementById("today-percent").innerHTML = `<span class="${colorize(data.summary.today_percent)}">${parseFloat(data.summary.today_percent).toFixed(2)}%</span>`;
         } catch (e) {
-          document.getElementById("update-time").innerText = "数据加载失败，请联系站长";
-          document.getElementById("equity-tbody").innerHTML = `<tr><td colspan="3">数据加载失败，请联系站长</td></tr>`;
+          document.getElementById("update-time").innerText = "加载失败";
+          document.getElementById("equity-tbody").innerHTML = `<tr><td colspan="3">加载失败，请刷新重试</td></tr>`;
         }
       }
+    // 加载历史数据
     async function loadHistory() {
       const url = "https://hk-ob-test.oss-cn-hongkong.aliyuncs.com/qdii/history.json";
       try {
@@ -207,13 +333,12 @@
         tbody.innerHTML = "";
         // 按日期倒序排序
         data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // 误差率统计的是全部数据，但表格只显示最近12条记录
         data.slice(-12).forEach(record => {
           let date = record.date;
           let val = parseFloat(record.total_percent);
           let nav_raw = record.nav_change_pct;
           let nav_val = parseFloat(nav_raw);
-          let navDisplay = (nav_raw === undefined || nav_raw === null || nav_raw === "" || isNaN(nav_val)) ? "尚未公布" : nav_val.toFixed(2) + "%";
-          // let nav_color = (!isNaN(nav_val)) ? (nav_val > 0 ? "text-danger" : nav_val < 0 ? "text-success" : "text-muted") : "";
           let nav_str, nav_color;
           if (!isNaN(nav_val)) {
             nav_str = nav_val.toFixed(2) + "%";
@@ -223,24 +348,19 @@
             nav_color = "";
           }
           let color = val > 0 ? "text-danger" : val < 0 ? "text-success" : "text-muted";
-          // 判断 nav_change_pct 字段
-          // let nav_raw = record.nav_change_pct;
-          // let nav_val = parseFloat(nav_raw);
-
           tbody.innerHTML += `
             <tr>
               <td>${date}</td>
               <td class="text-end ${color}">${val.toFixed(2)}%</td>
-              <td class="text-end ${nav_color}">${navDisplay}</td>
+              <td class="text-end ${nav_color}">${nav_str}</td>
             </tr>
           `;
         });
       } catch (e) {
-        document.getElementById("history-stats").innerText = "数据加载失败，请联系站长";
-        document.getElementById("history-tbody").innerHTML = `<tr><td colspan="3">数据加载失败，请联系站长</td></tr>`;
+        document.getElementById("history-stats").innerText = "加载失败";
+        document.getElementById("history-tbody").innerHTML = `<tr><td colspan="3">加载失败，请刷新重试</td></tr>`;
       }
     }
-    loadRealtime();
     loadHistory();
     </script>
 </body>
