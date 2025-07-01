@@ -212,6 +212,8 @@
           let val = parseFloat(record.total_percent);
           let nav_raw = record.nav_change_pct;
           let nav_val = parseFloat(nav_raw);
+          let navDisplay = (nav_raw === undefined || nav_raw === null || nav_raw === "" || isNaN(nav_val)) ? "尚未公布" : nav_val.toFixed(2) + "%";
+          // let nav_color = (!isNaN(nav_val)) ? (nav_val > 0 ? "text-danger" : nav_val < 0 ? "text-success" : "text-muted") : "";
           let nav_str, nav_color;
           if (!isNaN(nav_val)) {
             nav_str = nav_val.toFixed(2) + "%";
@@ -222,10 +224,9 @@
           }
           let color = val > 0 ? "text-danger" : val < 0 ? "text-success" : "text-muted";
           // 判断 nav_change_pct 字段
-          let nav_raw = record.nav_change_pct;
-          let nav_val = parseFloat(nav_raw);
-          let navDisplay = (nav_raw === undefined || nav_raw === null || nav_raw === "" || isNaN(nav_val)) ? "尚未公布" : nav_val.toFixed(2) + "%";
-          let nav_color = (!isNaN(nav_val)) ? (nav_val > 0 ? "text-danger" : nav_val < 0 ? "text-success" : "text-muted") : "";
+          // let nav_raw = record.nav_change_pct;
+          // let nav_val = parseFloat(nav_raw);
+
           tbody.innerHTML += `
             <tr>
               <td>${date}</td>
