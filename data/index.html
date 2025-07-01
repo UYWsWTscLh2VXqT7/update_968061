@@ -205,7 +205,9 @@
         // 渲染历史表格
         const tbody = document.getElementById("history-tbody");
         tbody.innerHTML = "";
-        data.slice(-30).forEach(record => {
+        // 按日期倒序排序
+        data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        data.slice(-12).forEach(record => {
           let date = record.date;
           let val = parseFloat(record.total_percent);
           let nav_raw = record.nav_change_pct;
@@ -219,6 +221,11 @@
             nav_color = "";
           }
           let color = val > 0 ? "text-danger" : val < 0 ? "text-success" : "text-muted";
+          // 判断 nav_change_pct 字段
+          let nav_raw = record.nav_change_pct;
+          let nav_val = parseFloat(nav_raw);
+          let navDisplay = (nav_raw === undefined || nav_raw === null || nav_raw === "" || isNaN(nav_val)) ? "尚未公布" : nav_val.toFixed(2) + "%";
+          let nav_color = (!isNaN(nav_val)) ? (nav_val > 0 ? "text-danger" : nav_val < 0 ? "text-success" : "text-muted") : "";
           tbody.innerHTML += `
             <tr>
               <td>${date}</td>
